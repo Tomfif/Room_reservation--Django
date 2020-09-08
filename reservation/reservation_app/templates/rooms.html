@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+<table class="table">
+
+  <thead>
+
+    <tr class="d-flex">
+
+      <th scope="col" class="col-1">#</th>
+
+      <th scope="col" class="col-2">Nazwa</th>
+
+      <th scope="col" class="col-1">Pojemność</th>
+
+      <th scope="col" class="col-5" colspan="4">Dostępność rzutnika</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {% for room in rooms %}
+
+    <tr class="d-flex">
+
+      <th scope="row" class="col-1">{{ room.id }}</th>
+
+      <td class="col-2">
+
+        <a href="/room/{{ room.id }}/">{{ room.name }}</a>
+
+      </td>
+
+      <td class="col-1">{{ room.capacity }}</td>
+
+      {% if room.projector_availability %}
+
+        <td class="col-2" style="color:darkgreen;">&#9745;</td>
+
+      {% else %}
+
+        <td class="col-2" style="color:red;">&#9746;</td>
+
+      {% endif %}
+
+      <td class="col-1">
+
+        <a href="/room/modify/{{ room.id }}/">edytuj</a>
+
+      </td>
+
+      <td class="col-1">
+
+        <a href="/room/delete/{{ room.id }}/">usuń</a>
+
+      </td>
+
+      <td class="col-1">
+
+        <a href="/room/reserve/{{ room.id }}/">zarezerwuj</a>
+
+      </td>
+
+    </tr>
+
+    {% empty %}
+
+      <tr><td colspan="6">Brak dostępnych sal</td></tr>
+
+    {% endfor %}
+
+  </tbody>
+
+</table>
+{% endblock %}

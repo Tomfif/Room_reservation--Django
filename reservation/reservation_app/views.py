@@ -24,3 +24,15 @@ class AddRoomView(View):
             return render(request, "add_room.html", context={"error": "Sala o podanej nazwie istnieje"})
         ConferenceRoom.objects.create(name=name, capacity=capacity, projector_availability=projector)
         return redirect("room-list")
+
+
+class RoomListView(View):
+    def get(self, request):
+        rooms = ConferenceRoom.objects.all()
+        return render(request, "rooms.html", context={"rooms": rooms})
+
+class DeleteRoomView(View):
+    def get(self, request, room_id):
+        room = ConferenceRoom.objects.get(id=room_id)
+        room.delete()
+        return redirect("room-list")

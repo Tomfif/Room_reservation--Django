@@ -8,11 +8,11 @@
 
       <th scope="col" class="col-1">#</th>
 
-      <th scope="col" class="col-2">Nazwa</th>
+      <th scope="col" class="col-2">Name</th>
 
-      <th scope="col" class="col-1">Pojemność</th>
+      <th scope="col" class="col-1">Capacity</th>
 
-      <th scope="col" class="col-5" colspan="4">Dostępność rzutnika</th>
+      <th scope="col" class="col-5" colspan="4">projector availability</th>
 
     </tr>
 
@@ -58,7 +58,7 @@
 
       <td class="col-1">
 
-        <a href="/room/reserve/{{ room.id }}/">zarezerwuj</a>
+        <a href="/room/reserve/{{ room.id }}/">book it</a>
 
       </td>
 
@@ -66,7 +66,7 @@
 
     {% empty %}
 
-      <tr><td colspan="6">Brak dostępnych sal</td></tr>
+      <tr><td colspan="6">No rooms available</td></tr>
 
     {% endfor %}
 

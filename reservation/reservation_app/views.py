@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 
 from django.views import View
 
-from .models import ConferenceRoom
-
+from .models import ConferenceRoom, RoomReservation
+import datetime
 
 
 class AddRoomView(View):
@@ -63,3 +63,24 @@ class ModifyRoomView(View):
         room.projector_availability = projector
         room.save()
         return redirect("room-list")
+
+class ReservationView(View):
+    def get(self, request, room_id):
+        room = ConferenceRoom.objects.get(id=room_id)
+        return render(request, "reservation.html", context={"room": room})
+    def post(self, request, room_id):
+        room = ConferenceRoom.objects.get(id=room_id)
+        date = request.POST.get("reservation-date")
+        comment = request.POST.get("comment")
+        if RoomReservation.objects.filter(room=room, date=date):
+            return render(request, "reservation.html", context={"room": room, "error": "Already Booked!"})
+        if date < str(datetime.date.today()):
+            return render(request, "reservation.html", context={"room": room, "error": "Date from the past!"})
+        RoomReservation.objects.create(room=room, date=date, comment=comment)
+        return redirect("room-list")
+
+class RoomDetailsView(View):
+    def get(self, request, room_id):
+        room = ConferenceRoom.objects.get(id=room_id)
+        reservations = room.roomreservation_set.filter(date__gte=str(datetime.date.today())).order_by('date')
+        return render(request, "room_details.html", context={"room": room, "reservations": reservations})

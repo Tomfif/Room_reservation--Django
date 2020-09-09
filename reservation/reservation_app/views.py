@@ -77,7 +77,7 @@ class ReservationView(View):
         date = request.POST.get("reservation-date")
         comment = request.POST.get("comment")
         reservations = room.roomreservation_set.filter(date__gte=str(datetime.date.today())).order_by('date')
-        if RoomReservation.objects.filter(room=room, date=date):
+        if RoomReservation.objects.filter(room_id_id=room_id, date=date):
             return render(request, "reservation.html", context={"room": room,
                                                                 "reservations": reservations,
                                                                 "error": "Already booked!"})
@@ -85,7 +85,7 @@ class ReservationView(View):
             return render(request, "reservation.html", context={"room": room,
                                                                 "reservations": reservations,
                                                                 "error": "Date from the past!"})
-        RoomReservation.objects.create(room=room, date=date, comment=comment)
+        RoomReservation.objects.create(room_id_id=room_id, date=date, comment=comment)
         return redirect("room-list")
 
 class RoomDetailsView(View):

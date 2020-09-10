@@ -2,61 +2,64 @@
 {% block content %}
 
 
-<div class="card">
+    <div class="card">
 
-  <div class="card-body">
+        <div class="card-body">
 
-    <form action="" method="POST">
+            <form action="" method="POST">
 
-      {% csrf_token %}
+                {% csrf_token %}
 
-      <div class="form-group">
+                <div class="form-group">
 
-        <label for="room-name">Room name</label>
+                    <label for="room-name">Room name</label>
 
-        <input type="text" class="form-control" id="room-name" aria-describedby="room-name-help" placeholder="Nazwa sali" name="room-name" value="{{ room.name }}">
+                    <input type="text" class="form-control" id="room-name" aria-describedby="room-name-help"
+                           placeholder="Nazwa sali" name="room-name" value="{{ room.name }}">
 
-        <small id="room-name-help" class="form-text text-muted">The name of the room must be unique.</small>
+                    <small id="room-name-help" class="form-text text-muted">The name of the room must be unique.</small>
 
-      </div>
+                </div>
 
-      <div class="form-group">
+                <div class="form-group">
 
-        <label for="capacity">Room capacity</label>
+                    <label for="capacity">Room capacity</label>
 
-        <input type="number" step="1" class="form-control" id="capacity" placeholder="10" name="capacity" value="{{ room.capacity }}">
+                    <input type="number" step="1" class="form-control" id="capacity" placeholder="10" name="capacity"
+                           value="{{ room.capacity }}">
 
-      </div>
+                </div>
 
-      <div class="form-check">
+                <div class="form-check">
 
-        <input type="checkbox" class="form-check-input" name="projector" id="projector" {% if room.projector_availability %} checked {% endif %}>
+                    <input type="checkbox" class="form-check-input" name="projector" id="projector"
+                            {% if room.projector_availability %} checked {% endif %}>
 
-        <label class="form-check-label" for="projector">projector availability</label>
+                    <label class="form-check-label" for="projector">projector availability</label>
 
-      </div>
+                </div>
 
-      <button type="submit" class="btn btn-primary">Edit</button>
+                <button type="submit" class="btn btn-primary">Edit</button>
 
-    </form>
+            </form>
 
-  </div>
+        </div>
 
-</div>
+    </div>
 
-{% if error %}
+    {% if error %}
 
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
 
-  {{error}}
+            {{ error }}
 
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 
-    <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
 
-  </button>
+            </button>
 
-</div>
+        </div>
 
-{% endif %}
+    {% endif %}
 {% endblock %}

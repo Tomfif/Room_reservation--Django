@@ -1,130 +1,133 @@
 {% extends 'base.html' %}
 {% block content %}
-<table class="table">
+    <table class="table">
 
-  <thead>
+        <thead>
 
-    <tr class="d-flex">
+        <tr class="d-flex">
 
-      <th scope="col" class="col-1">#</th>
+            <th scope="col" class="col-1">#</th>
 
-      <th scope="col" class="col-2">Name</th>
+            <th scope="col" class="col-2">Name</th>
 
-      <th scope="col" class="col-1">Capacity</th>
+            <th scope="col" class="col-1">Capacity</th>
 
-        <th scope="col" class="col-2">Availability</th>
+            <th scope="col" class="col-2">Availability</th>
 
-      <th scope="col" class="col-5" colspan="4">projector availability</th>
+            <th scope="col" class="col-5" colspan="4">projector availability</th>
 
-    </tr>
+        </tr>
 
-  </thead>
+        </thead>
 
-  <tbody>
+        <tbody>
 
-    {% for room in rooms %}
+        {% for room in rooms %}
 
-    <tr class="d-flex">
+            <tr class="d-flex">
 
-      <th scope="row" class="col-1">{{ room.id }}</th>
+                <th scope="row" class="col-1">{{ room.id }}</th>
 
-      <td class="col-2">
+                <td class="col-2">
 
-        <a href="/room/{{ room.id }}/">{{ room.name }}</a>
+                    <a href="/room/{{ room.id }}/">{{ room.name }}</a>
 
-      </td>
+                </td>
 
-      <td class="col-1">{{ room.capacity }}</td>
-    {% if room.reserved %}
+                <td class="col-1">{{ room.capacity }}</td>
+                {% if room.reserved %}
 
-        <td class="col-2" style="color:red;">Booked</td>
+                    <td class="col-2" style="color:red;">Booked</td>
 
-      {% else %}
+                {% else %}
 
-        <td class="col-2" style="color:green;">Free</td>
+                    <td class="col-2" style="color:green;">Free</td>
 
-      {% endif %}
+                {% endif %}
 
-      {% if room.projector_availability %}
+                {% if room.projector_availability %}
 
-        <td class="col-2" style="color:darkgreen;">&#9745;</td>
+                    <td class="col-2" style="color:darkgreen;">&#9745;</td>
 
-      {% else %}
+                {% else %}
 
-        <td class="col-2" style="color:red;">&#9746;</td>
+                    <td class="col-2" style="color:red;">&#9746;</td>
 
-      {% endif %}
+                {% endif %}
 
-      <td class="col-1">
+                <td class="col-1">
 
-        <a href="/room/modify/{{ room.id }}/">edytuj</a>
+                    <a href="/room/modify/{{ room.id }}/">edytuj</a>
 
-      </td>
+                </td>
 
-      <td class="col-1">
+                <td class="col-1">
 
-        <a href="/room/delete/{{ room.id }}/">usuń</a>
+                    <a href="/room/delete/{{ room.id }}/">usuń</a>
 
-      </td>
+                </td>
 
-      <td class="col-1">
+                <td class="col-1">
 
-        <a href="/room/reserve/{{ room.id }}/">book it</a>
+                    <a href="/room/reserve/{{ room.id }}/">book it</a>
 
-      </td>
+                </td>
 
-    </tr>
+            </tr>
 
-    {% empty %}
+        {% empty %}
 
-      <tr><td colspan="6">No rooms available</td></tr>
+            <tr>
+                <td colspan="6">No rooms available</td>
+            </tr>
 
-    {% endfor %}
+        {% endfor %}
 
-  </tbody>
+        </tbody>
 
-</table>
+    </table>
     <br>
     <h3>Wyszukiwanie</h3>
 
-<div class="card">
+    <div class="card">
 
-  <div class="card-body">
+        <div class="card-body">
 
-    <form action="/search" method="GET">
+            <form action="/search" method="GET">
 
-      {% csrf_token %}
+                {% csrf_token %}
 
-      <div class="form-group">
+                <div class="form-group">
 
-        <label for="room-name">Name</label>
+                    <label for="room-name">Name</label>
 
-        <input type="text" class="form-control" id="room-name" aria-describedby="room-name-help" placeholder="Nazwa sali" name="room-name">
+                    <input type="text" class="form-control" id="room-name" aria-describedby="room-name-help"
+                           placeholder="Nazwa sali" name="room-name">
 
-      </div>
+                </div>
 
-      <div class="form-group">
+                <div class="form-group">
 
-        <label for="capacity">Minimal capacity</label>
+                    <label for="capacity">Minimal capacity</label>
 
-        <input type="number" step="1" class="form-control" id="capacity" placeholder="10" name="capacity">
+                    <input type="number" step="1" class="form-control" id="capacity" placeholder="10" name="capacity">
 
-      </div>
+                </div>
 
 
-      <div class="form-check">
+                <div class="form-check">
 
-        <input type="checkbox" class="form-check-input" name="projector" id="projector">
+                    <input type="checkbox" class="form-check-input" name="projector" id="projector">
 
-        <label class="form-check-label" for="projector">Projector available</label>
+                    <label class="form-check-label" for="projector">Projector available</label>
 
-      </div>
+                </div>
 
-      <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary">Search</button>
 
-    </form>
+            </form>
 
-  </div>
+        </div>
 
-</div>
+    </div>
 {% endblock %}

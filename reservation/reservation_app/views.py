@@ -34,11 +34,13 @@ class RoomListView(View):
             room.reserved = datetime.date.today() in reservation_dates
         return render(request, "rooms.html", context={"rooms": rooms})
 
+
 class DeleteRoomView(View):
     def get(self, request, room_id):
         room = ConferenceRoom.objects.get(id=room_id)
         room.delete()
         return redirect("room-list")
+
 
 class ModifyRoomView(View):
     def get(self, request, room_id):
@@ -67,11 +69,13 @@ class ModifyRoomView(View):
         room.save()
         return redirect("room-list")
 
+
 class ReservationView(View):
     def get(self, request, room_id):
         room = ConferenceRoom.objects.get(id=room_id)
         reservations = room.roomreservation_set.filter(date__gte=str(datetime.date.today())).order_by('date')
         return render(request, "reservation.html", context={"room": room, "reservations": reservations})
+
     def post(self, request, room_id):
         room = ConferenceRoom.objects.get(id=room_id)
         date = request.POST.get("reservation-date")
@@ -88,11 +92,13 @@ class ReservationView(View):
         RoomReservation.objects.create(room_id_id=room_id, date=date, comment=comment)
         return redirect("room-list")
 
+
 class RoomDetailsView(View):
     def get(self, request, room_id):
         room = ConferenceRoom.objects.get(id=room_id)
         reservations = room.roomreservation_set.filter(date__gte=str(datetime.date.today())).order_by('date')
         return render(request, "room_details.html", context={"room": room, "reservations": reservations})
+
 
 class SearchView(View):
     def get(self, request):
@@ -111,4 +117,3 @@ class SearchView(View):
             reservation_dates = [reservation.date for reservation in room.roomreservation_set.all()]
             room.reserved = str(datetime.date.today()) in reservation_dates
         return render(request, "rooms.html", context={"rooms": rooms, "date": datetime.date.today()})
-

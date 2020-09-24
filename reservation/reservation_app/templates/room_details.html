@@ -34,18 +34,17 @@
 
             </p>
 
-
             <h3>Rezerwacje</h3>
 
             <ul class="list-group">
 
-                {% for reservation in reservations %}
+                {% for reservation in RoomReservation.objects.all %}
 
                     <li class="list-group-item">
 
-                        <h4>{{ reservation.date }}</h4>
+                        <h4>{{ object.date }}</h4>
 
-                        <p>{{ reservation.comment }}</p>
+                        <p>{{ object.comment }}</p>
 
                     </li>
 
